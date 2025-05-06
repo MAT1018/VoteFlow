@@ -81,4 +81,58 @@
 | Deployment  | Frontend: Netlify/Vercel, Backend: Render                   |
 
 ### 📂 System Architecture
+React Frontend → Express.js API ↔ Socket.io ↔ MongoDB
+↑
+Real-Time Updates
+
+
+---
+
+## 📡 API Endpoints
+
+| Endpoint         | Method | Description              |
+|------------------|--------|--------------------------|
+| `/api/polls`     | POST   | Create a new poll        |
+| `/api/polls/:id` | GET    | Fetch poll data          |
+| `/api/polls/vote`| PUT    | Submit a vote            |
+
+---
+
+## 📊 Success Metrics
+
+- Number of accounts created  
+- Successful logins  
+- Polls created  
+- Votes submitted  
+- Polls rated/viewed
+
+---
+
+## 🗓️ Timeline / Milestones
+
+| Phase            | Deliverables                                         |
+|------------------|------------------------------------------------------|
+| Planning         | PRD, DB Schema, Wireframes                           |
+| Core Dev (MVP)   | Poll Creation, Real-Time Voting                      |
+| Advanced Features| Charts, QR Sharing, Mobile Optimization              |
+| Testing & Polish | Bug Fixes, UI Enhancements                           |
+| Deployment       | Live on Vercel + Render                              |
+
+---
+
+## 📦 Deliverables
+
+- ✅ **Product Requirements Document (PRD)**  
+- ✅ **API Documentation (Postman/Swagger)**  
+- ✅ **System Architecture Diagram**  
+- 💻 **Code Repositories**  
+  - Frontend: [GitHub](#)  
+  - Backend: [GitHub](#)  
+- 🚀 **Deployed Application**: [Live Demo](#)
+
+---
+
+## 📄 Reference
+
+- [📑 Project Doc on Google Docs](https://docs.google.com/document/d/1yeC7KHB_PKVr9jR19xHVd7gIIJrbTa0Zg_wEaj_E_YY/edit?tab=t.0)
 
