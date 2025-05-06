@@ -23,16 +23,6 @@
 
 ---
 
-## 👥 Target Users & Use Cases
-
-| User Type       | Use Case                                              |
-|------------------|--------------------------------------------------------|
-| Event Organizers | Quick audience feedback during meetings/webinars      |
-| Educators        | Engage students with live quizzes                     |
-| General Users    | Casual polls (e.g., “Best lunch spot?”)               |
-
----
-
 ## ✅ Features
 
 ### 📌 Core Features
@@ -54,17 +44,6 @@
 
 ---
 
-## 🧭 User Flow
-
-### 👩‍💻 Poll Creator
-`Sign Up / Log In → Create Poll → Configure → Share Link/QR → View Results`
-
-### 👨‍💻 Voter  
-`Open Poll Link → Vote → See Real-Time Results`
-
-### 🛡️ Admin  
-`View Dashboard → Manage Users → Delete Inappropriate Content`
-
 ---
 
 ## ⚙️ Technical Specifications
@@ -80,14 +59,6 @@
 | Auth        | JWT + Bcrypt                                                |
 | Deployment  | Frontend: Netlify/Vercel, Backend: Render                   |
 
-### 📂 System Architecture
-React Frontend → Express.js API ↔ Socket.io ↔ MongoDB
-↑
-Real-Time Updates
-
-
----
-
 ## 📡 API Endpoints
 
 | Endpoint         | Method | Description              |
@@ -96,44 +67,23 @@ Real-Time Updates
 | `/api/polls/:id` | GET    | Fetch poll data          |
 | `/api/polls/vote`| PUT    | Submit a vote            |
 
----
-
-## 📊 Success Metrics
-
-- Number of accounts created  
-- Successful logins  
-- Polls created  
-- Votes submitted  
-- Polls rated/viewed
+- Frontend: [GitHub](https://github.com/MAT1018/VoteFlow/tree/main/frontend)  
+- Backend: [GitHub](https://github.com/MAT1018/VoteFlow/tree/main/backend)  
 
 ---
+🚀 Steps to Run Locally
 
-## 🗓️ Timeline / Milestones
+`git clone https://github.com/MAT1018/VoteFlow.git
+cd VoteFlow`
 
-| Phase            | Deliverables                                         |
-|------------------|------------------------------------------------------|
-| Planning         | PRD, DB Schema, Wireframes                           |
-| Core Dev (MVP)   | Poll Creation, Real-Time Voting                      |
-| Advanced Features| Charts, QR Sharing, Mobile Optimization              |
-| Testing & Polish | Bug Fixes, UI Enhancements                           |
-| Deployment       | Live on Vercel + Render                              |
+`cd frontend`
 
----
+`npm install`
 
-## 📦 Deliverables
-
-- ✅ **Product Requirements Document (PRD)**  
-- ✅ **API Documentation (Postman/Swagger)**  
-- ✅ **System Architecture Diagram**  
-- 💻 **Code Repositories**  
-  - Frontend: [GitHub](#)  
-  - Backend: [GitHub](#)  
-- 🚀 **Deployed Application**: [Live Demo](#)
-
----
+`npm start`
 
 ## 📄 Reference
 
-- [📑 Project Doc on Google Docs](https://docs.google.com/document/d/1yeC7KHB_PKVr9jR19xHVd7gIIJrbTa0Zg_wEaj_E_YY/edit?tab=t.0)
+ [📑 Project Doc on Google Docs](https://docs.google.com/document/d/1yeC7KHB_PKVr9jR19xHVd7gIIJrbTa0Zg_wEaj_E_YY/edit?tab=t.0)
 
-📧 [ayaan.taimur1@gmail.com](mailto:ayaan.taimur1@gmail.com)
+📧[ayaan.taimur1@gmail.com](mailto:ayaan.taimur1@gmail.com)
