@@ -136,3 +136,4 @@ Real-Time Updates
 
 - [📑 Project Doc on Google Docs](https://docs.google.com/document/d/1yeC7KHB_PKVr9jR19xHVd7gIIJrbTa0Zg_wEaj_E_YY/edit?tab=t.0)
 
+📧 [ayaan.taimur1@gmail.com](mailto:ayaan.taimur1@gmail.com)
