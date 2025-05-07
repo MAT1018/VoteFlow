@@ -1,10 +1,10 @@
 const User = require("../models/User");
-const jwt = require("jsonwbtoken");
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 //Generate jwt token
-const generateToken = (id) =>{
-    return jwt.sign({ id }, process.env.JWT_SECRET, {expires:'1h'});
+const generateToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 }
 
 //Register user
@@ -55,5 +55,63 @@ exports.registerUser = async(req,res)=>{
         res
          .status(500)
          .json({ message: "Error registering user", error: err.message })
+    }
+}
+
+//Login user
+exports.loginUser = async(req,res)=>{
+    const {  email, password } = req.body;
+
+    //Validation: check for missing fields
+    if( !email || !password ){
+        return res.status(400).json({ message: "All fields are required" })
+    }
+
+    try{
+        const user = await User.findOne({ email });
+        if(!User || !(await user.comparePassword(password))){
+            return res.status(400).json({ message: "All fields are required" })
+        }
+        res
+        .status(200)
+        .json({
+            id: user._id,
+            user: {
+                ...user.toObject(),
+                totalPollsCreated: 0,
+                totalPollsVotes: 0,
+                totalPollsBookmarked: 0,
+            },
+            token: generateToken(user._id),
+        })
+
+    } catch(err){
+        res
+        .status(500)
+        .json({ message: "Error registering user", error: err.message })
+    }
+}
+
+//Get user info
+exports.getUserInfo = async(req,res)=>{
+    try{
+        const user = await User.findById(req.user.id).select("-password");
+        if(!user){
+            return res.status(400).json({ message: "User not found" });
+        }
+
+        //Add the new attributes to the response 
+        const userInfo = {
+            ...user.toObject(),
+            totalPollsCreated: 0,
+            totalPollsBookmarked: 0,
+            totalPollsVotes: 0,
+        }
+        res.status(200).json(userInfo)
+
+    }catch(err){
+        res
+        .status(500)
+        .json({ message: "Error registering user", error: err.message })
     }
 }

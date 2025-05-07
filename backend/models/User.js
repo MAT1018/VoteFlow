@@ -2,16 +2,16 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs")
 
 const UserSchema = new mongoose.Schema({
-    usernmae: { type: String, required:true },
-    fullname: { type: String, required:true },
+    username: { type: String, required:true },
+    fullName: { type: String, required:true },
     email: { type: String, required:true, unique:true },
     password: { type: String, required:true },
-    profileImageUrl: { type: String, default:true },
+    profileImageUrl: { type: String, default: "" },
     bookemarkedpolls: [{ type: mongoose.Schema.Types.ObjectID, ref:"Poll" }]
 }, {timestamps:true});
 
 //Hash password before saving
-UserSchema.pre('async', async function(next){
+UserSchema.pre("save", async function(next){
     if(!this.isModified('password')) return next();
     this.password = await bcrypt.hash(this.password, 10);
     next();
