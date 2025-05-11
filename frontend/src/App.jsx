@@ -12,13 +12,15 @@ import MyPolls from "./pages/Dashboard/MyPolls"
 import VotedPolls from "./pages/Dashboard/VotedPolls"
 import Bookmarks from "./pages/Dashboard/Bookmarks"
 import Home from "./pages/Dashboard/Home"
+import UserProvider from "./context/UserContext"
 
 const App = () => {
   console.log("App component rendering");
 
   return (
     <div>
-      <Router>
+     <UserProvider>
+       <Router>
         <Routes>
           <Route path="/" element={<Root/>}  />
           <Route path="/login" exact element={<LoginForm/>} />
@@ -31,7 +33,8 @@ const App = () => {
    
 
         </Routes>
-      </Router>
+       </Router>
+      </UserProvider>
     </div>
 
     

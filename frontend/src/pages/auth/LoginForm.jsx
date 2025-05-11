@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import AuthInput from '../../components/input/AuthInput';
 import AuthLayout from '../../components/layout/AuthLayout';
 import { validateEmail } from '../../utils/helper';
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPaths';
+import { UserContext } from '../../context/UserContext';
 
 export const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
+  const {updateUser} = useContext(UserContext)
   const navigate = useNavigate();
 
   //handle Login Form Submission
@@ -25,15 +29,27 @@ export const LoginForm = () => {
     }
     setError('');
 
-    // Add your login logic here
+    //Login API
     try{
+      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
+        email,
+        password,
+      });
+      const { token, user } = response.data;
 
-    } catch (err) {
-
+      if(token){
+        localStorage.setItem("token",token)
+        updateUser(user)
+        navigate("/dashboard");
+      }
+    } catch (error){
+      if(error.response && error.response.data.message){
+        setError(error.response.data.message)
+      } else{
+        setError("Something went wrong. Please try again")
+      }
     }
-        
-  };
-
+  }
   return (
     <AuthLayout>
       <div className="lg:w-[70%] h-3/4 md:h-full flex flex-col justify-center">
