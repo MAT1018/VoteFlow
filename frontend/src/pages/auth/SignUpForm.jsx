@@ -1,10 +1,14 @@
-import React, {useState} from 'react';
+import React, { useState, useContext } from 'react';
 import AuthLayout from '../../components/layout/AuthLayout';
 import AuthInput from '../../components/input/AuthInput';
 import { useNavigate } from 'react-router-dom';
 import ProfilePhotoSelecter from '../../components/input/ProfilePhotoSelecter';
 import { Link } from 'react-router-dom';
 import { validateEmail } from '../../utils/helper';
+import { UserContext } from '../../context/UserContext';
+import uploadImage from '../../utils/uploadImage';
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPaths';
 
 const SignUpForm = () => {
 
@@ -16,11 +20,13 @@ const SignUpForm = () => {
 
   const [error, setError] = useState(null);
 
+  const {updateUser} = useContext(UserContext)
   const navigate = useNavigate();
   
   //handle Sign Up Form Submission
   const handleSignUp = async (e) => {
     e.preventDefault();
+     let profileImageUrl = "";
 
         if (!fullName) {
           setError('Please enter the full name');
@@ -42,10 +48,35 @@ const SignUpForm = () => {
     
         // Sign up API 
         try{
-    
-        } catch (err) {
-    
-        }
+          //upload img if present
+          if(profilePic){
+            const imgUploadRes = await uploadImage(profilePic);
+            profileImageUrl = imgUploadRes.imageUrl || "";
+          }
+
+          const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
+            fullName,
+            username,
+            email,
+            password,
+            profileImageUrl,
+          });
+
+          const { token, user } = response.data;
+
+          if(token){
+            localStorage.setItem("token", token);
+            updateUser(user);
+            navigate("/dashboard");
+          }
+        } catch (error){
+          if(error.response && error.response.data.message){
+              setError(error.response.data.message)
+          }else{
+                setError("Something went wrong. Please try again")
+            }
+    }
+
   }
   return (
    <AuthLayout>
