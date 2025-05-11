@@ -11,6 +11,7 @@ export const LoginForm = () => {
 
   const navigate = useNavigate();
 
+  //handle Login Form Submission
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -25,6 +26,12 @@ export const LoginForm = () => {
     setError('');
 
     // Add your login logic here
+    try{
+
+    } catch (err) {
+
+    }
+        
   };
 
   return (
