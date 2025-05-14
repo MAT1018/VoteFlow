@@ -8,7 +8,7 @@ const AuthLayout = ({ children }) => {
     <div className="flex">
       {/* Left Section */}
       <div className="w-screen h-screen md:w-1/2 px-12 pt-8 pb-12">
-        <h2 className="text-lg font-medium text-black text-3xl">VoteFlow</h2>
+        <h2 className="text-2xl font-medium text-black ">VoteFlow</h2>
         {children}
       </div>
 
