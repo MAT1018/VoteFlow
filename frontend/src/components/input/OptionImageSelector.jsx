@@ -1,5 +1,5 @@
 import React from 'react'
-import {HiOutLineTrash, HiMiniplus} from "react-icon/hi2";
+import {HiOutLineTrash, HiMiniplus} from "react-icons/hi2";
 const OptionImageSelector = ({ imageList, setImageList}) => {
 
     //Function to handle adding an image
@@ -41,7 +41,7 @@ const OptionImageSelector = ({ imageList, setImageList}) => {
         </div>
     )}
         {imageList.length < 4 && (
-            <div className="flex items-centre gap-5">
+            <div className="flex items-center gap-5">
                 <input 
                 type='file'
                 accept='image/jpeg, image/png'

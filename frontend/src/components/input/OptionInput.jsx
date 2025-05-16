@@ -41,13 +41,13 @@ const OptionInput = ({optionList, setOptionList }) => {
             <div className="flex items-center gap-5 mt-4">
             <input
              type="text" 
-             placeholder="Entre Option"
+             placeholder="Enter Option"
              value={option}
              onChange={({target}) => setOption(target.value)}
-             className="w-full text-[13px] text-black outline-none bg-dray-200/80 px-3 py-[6px] rounded-md"
+             className="w-full text-[13px] text-black outline-none bg-gray-200/80 px-3 py-[6px] rounded-md"
              />
         <button 
-        className='btn-small text-nowrap py-a[6px]'
+        className='btn-small text-nowrap py-[6px]'
         onClick={handleAddOption}
         >
             <HiMiniPlus className="text-lg"/> Add Option
