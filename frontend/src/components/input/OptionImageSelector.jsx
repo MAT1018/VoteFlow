@@ -1,5 +1,5 @@
 import React from 'react'
-import {HiOutLineTrash, HiMiniplus} from "react-icons/hi2";
+import { HiOutlineTrash, HiMiniPlus } from "react-icons/hi2";
 const OptionImageSelector = ({ imageList, setImageList}) => {
 
     //Function to handle adding an image
