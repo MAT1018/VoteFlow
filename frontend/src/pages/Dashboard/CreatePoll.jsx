@@ -35,7 +35,7 @@ const CreatePoll = () => {
   }
 
   if(type === "single-choice" && options.length <2){
-    handleValueChange("error", "Enter at two options");
+    handleValueChange("error", "Enter at least two options");
     return;
   }
 
