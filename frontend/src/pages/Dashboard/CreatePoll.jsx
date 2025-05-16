@@ -24,8 +24,29 @@ const CreatePoll = () => {
       ...prev,
       [key]: value,
     }))
+  };
+  //create a Poll
+  const handleCreatePoll = async () => {
+    const { question, type, options, imageOptions, error } = pollData;
+    if(!question || !type){
+    console.log("CREATE:", { question, type, options, error});
+    handleValueChange("error", "Question & Type are required");
+    return;
   }
 
+  if(type === "single-choice" && options.length <2){
+    handleValueChange("error", "Enter at two options");
+    return;
+  }
+
+  if(type === "image-based" && imageOptions.length <2){
+    handleValueChange("error", "Enter at two options");
+    return;
+  }
+  handleValueChange("error", "");
+  console.log("NO_ERR",{pollData});
+
+}
 
   return (
     <DashboardLayout activeMenu='Create Poll'>
@@ -71,12 +92,48 @@ const CreatePoll = () => {
               <label className='text-xs font-medium text-slate-600'>Options</label>
 
               <div className='mt-3'>
+                <OptionInput
+                optionList={pollData.options}
+                setOptionList={(value) =>{
+                  handleValueChange("options", value);
+                }
+                }
+                />
               </div>    
             </div>
           )}
-      </div>
-    </DashboardLayout>
-  )
-}
 
-export default CreatePoll
+{pollData.type === 'image-based' && (
+<div className='mt-5'>
+  <label className='text-xs font-medium text-slate-600'>
+   IMAGE OPTIONS
+    </label>
+
+    <div className="mt-3">
+      <OptionImageSelector
+      imageList={pollData.imageOptions}
+      setImageList={(value) => {
+        handleValueChange("imageOptions", value);
+      }}
+      />
+  </div>  
+  </div>
+  )}
+
+  {pollData.error && (
+    <p className="text-xs font-medium text-red-500 mt-5">
+      {pollData.error}
+    </p>
+  )}
+
+  <button className='btn-primary py-2 mt-6' onClick={handleCreatePoll}>
+    CREATE
+  </button>
+  </div>
+    </DashboardLayout>
+   );
+  };
+
+
+
+export default CreatePoll;
