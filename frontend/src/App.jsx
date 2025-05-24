@@ -13,7 +13,8 @@ import VotedPolls from "./pages/Dashboard/VotedPolls"
 import Bookmarks from "./pages/Dashboard/Bookmarks"
 import Home from "./pages/Dashboard/Home"
 import UserProvider from "./context/UserContext"
-
+import { Toaster } from "react-hot-toast"
+ 
 const App = () => {
   console.log("App component rendering");
 
@@ -30,10 +31,16 @@ const App = () => {
           <Route path="/my-polls" exact element={<MyPolls/>} />
           <Route path="/voted-polls" exact element={<VotedPolls/>} />
           <Route path="/bookmarked-polls" exact element={<Bookmarks/>} />
-   
-
         </Routes>
        </Router>
+       <Toaster
+       toastOptions={{
+        className:"",
+        style:{
+          fonstSize:'13px'
+        },
+       }}
+       />
       </UserProvider>
     </div>
 
