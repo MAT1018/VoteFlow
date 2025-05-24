@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const Poll = require("../models/Poll");
 
 //Generate jwt token
 const generateToken = (id) => {
@@ -70,17 +71,30 @@ exports.loginUser = async(req,res)=>{
     try{
         const user = await User.findOne({ email });
         if(!User || !(await user.comparePassword(password))){
-            return res.status(400).json({ message: "All fields are required" })
+            return res.status(400).json({ message: "Invalid Credentials" })
         }
+
+        //Count polls created by user
+        const totalPollsCreated = await Poll.countDocuments({ creator: user._id })
+
+        //Count polls the user has voted in
+        const totalPollsVotes = await Poll.countDocuments({
+            voters: user._id,
+        })
+
+        //Get the count of bookmarked polls
+        const totalPollsBookmarked = user.bookmarkedPolls.length;
+
+
         res
         .status(200)
         .json({
             id: user._id,
             user: {
                 ...user.toObject(),
-                totalPollsCreated: 0,
-                totalPollsVotes: 0,
-                totalPollsBookmarked: 0,
+                totalPollsCreated,
+                totalPollsVotes,
+                totalPollsBookmarked,
             },
             token: generateToken(user._id),
         })
@@ -100,12 +114,23 @@ exports.getUserInfo = async(req,res)=>{
             return res.status(400).json({ message: "User not found" });
         }
 
+        //Count polls created by user
+        const totalPollsCreated = await Poll.countDocuments({ creator: user._id })
+
+        //Count polls the user has voted in
+        const totalPollsVotes = await Poll.countDocuments({
+            voters: user._id,
+        })
+
+        //Get the count of bookmarked polls
+        const totalPollsBookmarked = user.bookmarkedPolls.length;
+
         //Add the new attributes to the response 
         const userInfo = {
             ...user.toObject(),
-            totalPollsCreated: 0,
-            totalPollsBookmarked: 0,
-            totalPollsVotes: 0,
+            totalPollsCreated,
+            totalPollsBookmarked,
+            totalPollsVotes,
         }
         res.status(200).json(userInfo)
 

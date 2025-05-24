@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema({
     email: { type: String, required:true, unique:true },
     password: { type: String, required:true },
     profileImageUrl: { type: String, default: "" },
-    bookemarkedpolls: [{ type: mongoose.Schema.Types.ObjectID, ref:"Poll" }]
+    bookmarkedPolls: [{ type: mongoose.Schema.Types.ObjectID, ref:"Poll" }]
 }, {timestamps:true});
 
 //Hash password before saving

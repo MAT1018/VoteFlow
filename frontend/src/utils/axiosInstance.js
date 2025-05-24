@@ -12,7 +12,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
     (config)=>{
-        const accessToken = localStorage.getItem("Token");
+        const accessToken = localStorage.getItem("token");
         if(accessToken){
             config.headers.Authorization = `Bearer ${accessToken}`;
         }
@@ -31,7 +31,7 @@ axiosInstance.interceptors.response.use(
         if(error.response){    //Handle common errors globally 
             if(error.response.status === 401){
                 console.log("Unauthorized! redirecting to login")
-                window.location.href("/login")
+                window.location.href = "/login"
             } else if(error.response.status === 500){
                 console.log("Server error. Please try again later")
             } else if(error.code === "ECONNABORTED"){
