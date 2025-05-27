@@ -55,7 +55,7 @@ const PollContent = ({
                   className="w-full text-[13px] text-black outline-none bg-slate-200/80 p-2 rounded-md mt-2"
                   rows={4}
                   value={userResponse}
-                  onChange={({target}) => onResponseChange(target.value)}
+                  onChange={({target}) => onUserResponseChange(target.value)}
                 />
 
               </div>

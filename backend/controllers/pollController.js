@@ -218,6 +218,11 @@ exports.getPollById = async (req, res) => {
     const { id } = req.params;
     try{
         const poll = await Poll.findById(id).populate("creator", "username email")
+        .populate("creator", "username email")
+        .populate({
+            path: "response.voterId",
+            select: "username profileImageUrl fullName",
+         })
         if(!poll){
             return res.status(400).json({ message: "Poll not found" })
         }
@@ -310,43 +315,65 @@ exports.closePoll = async (req, res) => {
 
 //Bookmark Poll
 exports.bookmarkPoll = async (req, res) => {
-    const { id } = req.params; //Poll ID
-    const userId = req.user.id;
-    try{
-        const user = await User.findById(userId)
-        if(!user){
-            return res.status(404).json({ message: "User not found" });
-        }
+  const { id } = req.params; // Poll ID
+  const userId = req.user.id;
+  try {
+    const user = await User.findById(userId).populate({
+      path: "bookmarkedPolls",
+      populate: [
+        { path: "creator", select: "fullName username profileImageUrl" },
+        { path: "response.voterId", select: "fullName username profileImageUrl" },
+      ],
+    });
 
-        //Check if poll is already bookmarked or not
-        const isBookmarked = user.bookmarkedPolls.includes(id);
-
-        if(isBookmarked){
-            //Remove poll from bookmarks
-            user.bookmarkedPolls = user.bookmarkedPolls.filter(
-                (pollId) => pollId.toString() !== id
-            );
-
-            await user.save();
-            return res.status(200).json({
-                message: "Poll removed from bookmarks",
-                bookmarkedPolls: user.bookmarkedPolls,
-            })
-        }
-
-        //Add poll to bookmarks
-        user.bookmarkedPolls.push(id);
-        await user.save();
-        res.status(200).json({
-            message: "Poll bookmarked successfully",
-            bookmarkedPolls: user.bookmarkedPolls,
-        });
-    } catch(err){
-        res
-        .status(500)
-        .json({ message: "Error registering user", error: err.message })
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
-}
+
+    const isBookmarked = user.bookmarkedPolls.some(
+      (poll) => poll._id.toString() === id
+    );
+
+    if (isBookmarked) {
+      user.bookmarkedPolls = user.bookmarkedPolls.filter(
+        (poll) => poll._id.toString() !== id
+      );
+      await user.save();
+
+      // Re-populate to return full poll objects
+      const updatedUser = await User.findById(userId).populate({
+        path: "bookmarkedPolls",
+        populate: [
+          { path: "creator", select: "fullName username profileImageUrl" },
+          { path: "response.voterId", select: "fullName username profileImageUrl" },
+        ],
+      });
+
+      return res.status(200).json({
+        message: "Poll removed from bookmarks",
+        bookmarkedPolls: updatedUser.bookmarkedPolls,
+      });
+    }
+
+    user.bookmarkedPolls.push(id);
+    await user.save();
+
+    const updatedUser = await User.findById(userId).populate({
+      path: "bookmarkedPolls",
+      populate: [
+        { path: "creator", select: "fullName username profileImageUrl" },
+        { path: "response.voterId", select: "fullName username profileImageUrl" },
+      ],
+    });
+
+    res.status(200).json({
+      message: "Poll bookmarked successfully",
+      bookmarkedPolls: updatedUser.bookmarkedPolls,
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Error registering user", error: err.message });
+  }
+};
 
 //Get All Bookmark Polls
 exports.getBookmarkedPolls = async (req, res) => {

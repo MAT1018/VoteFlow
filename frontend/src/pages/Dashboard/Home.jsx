@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from 'react';
+import React, { useEffect } from 'react';
 import DashboardLayout from '../../components/layout/DashboardLayout';
 import useUserAuth from '../../hooks/useUserAuth';
 import { useState } from 'react';
@@ -7,6 +7,9 @@ import HeaderWithFilter from '../../components/layout/HeaderWithFilter';
 import { API_PATHS} from '../../utils/apiPaths';
 import axiosInstance from '../../utils/axiosInstance';
 import PollCard from '../../components/PollCards/PollCard';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import CREATE_ICON from '../../assets/images/auth-card-3.png';
+import EmptyCard from '../../components/cards/EmptyCard';
 
 
 const PAGE_SIZE = 10;
@@ -50,11 +53,16 @@ try {
 setHasMore(false);
 
 } catch (error) {
+  console.log("Something went wrong. Please try again.", error);
 } finally{
 setLoading(false);
 }
 
 };
+
+const loadMorePolls = ()=>{
+  setPage((prevPage)=> prevPage + 1)
+}
 
 useEffect(() => {
   setPage(1);
@@ -79,9 +87,26 @@ useEffect(() => {
         filterType={filterType}
         setFilterType={setFilterType}
      />
+
+     {allPolls.length === 0 && !loading && (
+      <EmptyCard
+       imgsrc={CREATE_ICON}
+       message="Welcome! You're the first user of the system and there are no polls yet. Start by creating the first one"
+       btnText="Create Poll"
+       onClick={()=> navigate("/create-poll")}
+      />
+     )}
+
+    <InfiniteScroll
+      dataLength={allPolls.length}
+      next={loadMorePolls}
+      hasMore={hasMore}
+      loader={<h4 className='info-text'>Loading...</h4>}
+      endMessage={<p className='info-text'>No more polls to display.</p>}
+    >
      {allPolls.map((poll) =>(
           <PollCard
-            key={ 'dashboard_${poll._id}'}
+            key={ `dashboard_${poll._id}`}
             pollId={poll._id}
             question={poll.question}
             type={poll.type}
@@ -96,7 +121,7 @@ useEffect(() => {
             createdAt={poll.createdAt || false}
           />
           ))}
-
+        </InfiniteScroll>
       </div>
     </DashboardLayout>
   )
