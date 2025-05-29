@@ -15,7 +15,7 @@ export const SIDE_MENU_DATA = [
     },
      {
         id: "03",
-        label:"My polls",
+        label:"My Polls",
         icon:LuPenTool,
         path:"/my-polls",
     },
