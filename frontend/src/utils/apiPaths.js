@@ -1,6 +1,6 @@
 // export const REACT_APP_API_URL = 'http://localhost:8000'
 
-export const REACT_APP_API_URL = 'https://voteflow.onrender.com/' 
+export const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
 export const API_PATHS = {
     AUTH:{
