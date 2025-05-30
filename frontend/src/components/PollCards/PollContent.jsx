@@ -1,7 +1,6 @@
 import React from 'react'
 import OptionInputTile from '../input/OptionInputTile'
 import Rating from '../input/Rating'
-import { useState } from 'react';
 import ImageOptionInputTile from '../input/ImageOptionInputTile';
 
 
@@ -66,7 +65,7 @@ const PollContent = ({
             );
         default:
           return null;
-        };
+        }
 }
 
 export default PollContent

@@ -1,26 +1,18 @@
-const multer = require("multer")
-const path = require("path")
+const multer = require("multer");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const cloudinary = require("../config/cloudinary");
 
-//Configure Storage
-const storage = multer.diskStorage({
-    destination: (res,file,cb)=>{
-        cb(null,'uploads/')
-    },
-    filename: (req,file,cb)=>{
-        cb(null,`${Date.now()}-${file.originalname}`)
-    },
+// Define Cloudinary storage
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "polling-app-profile-images", // Cloudinary folder name
+    allowed_formats: ["jpg", "jpeg", "png"],
+    transformation: [{ width: 500, height: 500, crop: "limit" }],
+  },
 });
 
-//File filer
-const fileFilter = (req,file,cb)=>{
-    const allowedTypes = ['image/jpeg','image/png','image/jpg'];
-    if(allowedTypes.includes(file.mimetype)){
-        cb(null,true)
-    }
-    else{
-        cb(new Error('Only .jpeg, .jpg and .png formats are allowed'),false)
-    }
-}
-const upload = multer({ storage, fileFilter })
+// Create multer instance using Cloudinary storage
+const upload = multer({ storage });
 
 module.exports = upload;

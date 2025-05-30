@@ -1,4 +1,3 @@
-import React from 'react'
 import CharAvatar from '../cards/CharAvatar'
 import moment from "moment"
 
@@ -62,7 +61,7 @@ const PollingResultContent = ({type, options, voters, responses}) => {
     case "rating":
       return(
         <>
-        {options.map((option, index)=>(
+        {options.map((option)=>(
           <PollOptionVoteResult 
            key={option._id}
            label={`${option.optionText} ${type === "rating" ? "Star" : ""}`}
@@ -77,7 +76,7 @@ const PollingResultContent = ({type, options, voters, responses}) => {
     case "image-based":
         return(
           <div className='grid grid-cols-2 gap-4'>
-            {options.map((option, index)=>(
+            {options.map((option)=>(
               <ImagePollResult
                key={option._id}
                imgUrl={option.optionText || ""}
@@ -106,9 +105,6 @@ const PollingResultContent = ({type, options, voters, responses}) => {
       default:
         return null;
   }
-  return (
-    <div>PollingResultContent</div>
-  )
 }
 
 export default PollingResultContent

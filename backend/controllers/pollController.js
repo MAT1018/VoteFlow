@@ -260,7 +260,7 @@ return res
 .status(400)
 .json({ message: "Response text is required for open-ended polls." });
 }
-poll.responses.push({voterId, responseText});
+poll.response.push({voterId, responseText});
 
 }else{
     if(

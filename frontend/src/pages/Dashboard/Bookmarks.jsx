@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DashboardLayout from '../../components/layout/DashboardLayout';
 import useUserAuth from '../../hooks/useUserAuth';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +15,7 @@ const PAGE_SIZE = 10;
 const Bookmarks = () => {
   useUserAuth();
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
+  // const { user } = useContext(UserContext);
 
   const [bookmarkedPolls, setBookmarkedPolls] = useState([]);
   const [page, setPage] = useState(1);
