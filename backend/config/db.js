@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"); //ORM = Object Relational Mapping
 
 const connectDB = async ()=>{
     try{
